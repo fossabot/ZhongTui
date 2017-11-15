@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>image</key>
+		<string>timg-1</string>
+		<key>title</key>
+		<string>11个生活用品就能保养车，从此不花冤枉钱</string>
+		<key>usedTimes</key>
+		<string>1244</string>
+	</dict>
+    <dict>
+        <key>image</key>
+        <string>timg-2</string>
+        <key>title</key>
+        <string>冬天下雪怎么保养，下雪开车的注意事项</string>
+        <key>usedTimes</key>
+        <string>174</string>
+    </dict>
+    <dict>
+        <key>image</key>
+        <string>timg-3</string>
+        <key>title</key>
+        <string>车辆的这些零部件一定要及时更换，否则车子就要报废了</string>
+        <key>usedTimes</key>
+        <string>264</string>
+    </dict>
+    <dict>
+        <key>image</key>
+        <string>timg-4</string>
+        <key>title</key>
+        <string>汽车1500的转速开车，对车子有什么影响</string>
+        <key>usedTimes</key>
+        <string>244</string>
+    </dict>
+    <dict>
+        <key>image</key>
+        <string>timg-5</string>
+        <key>title</key>
+        <string>刹车失灵的救命绝招，有车没车都要看</string>
+        <key>usedTimes</key>
+        <string>140</string>
+    </dict>
+    <dict>
+        <key>image</key>
+        <string>timg-6</string>
+        <key>title</key>
+        <string>科目二半坡起步学会这些办法，多高的坡都能上去</string>
+        <key>usedTimes</key>
+        <string>198</string>
+    </dict>
+    <dict>
+        <key>image</key>
+        <string>timg-7</string>
+        <key>title</key>
+        <string>冬天，开车前到底该不该原地热车</string>
+        <key>usedTimes</key>
+        <string>178</string>
+    </dict>
+</array>
+</plist>
