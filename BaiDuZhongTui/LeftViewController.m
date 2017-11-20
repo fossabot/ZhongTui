@@ -12,6 +12,8 @@
 #import "LeftCommonCell.h"
 #import "YYEdgeLabel.h"
 #import "MineWalletController.h"
+#import "ZTAroundController.h"
+#import "MineCardsController.h"
 
 #import "MMExampleDrawerVisualStateManager.h"
 #import "UIViewController+MMDrawerController.h"
@@ -55,7 +57,6 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = WhiteColor;
-    
     [self createSubView];
 }
 
@@ -84,40 +85,6 @@
        
         make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(0, 0, 84, 0));
     }];
-    
-//    [self.header makeConstraints:^(MASConstraintMaker *make) {
-//    
-//        make.height.equalTo(300);
-//        make.width.equalTo(self.tableView);
-//    }];
-    
-//    [self.avatar makeConstraints:^(MASConstraintMaker *make) {
-//       
-//        make.left.top.equalTo(20);
-//        make.width.equalTo(60);
-//        make.height.equalTo(60);
-//    }];
-//    
-//    [self.nickName makeConstraints:^(MASConstraintMaker *make) {
-//       
-//        make.top.equalTo(self.avatar);
-//        make.left.equalTo(self.avatar.right).offset(20);
-//    }];
-//    
-//    [self.level makeConstraints:^(MASConstraintMaker *make) {
-//       
-//        make.left.equalTo(self.nickName);
-//        make.top.equalTo(self.nickName.bottom).offset(10);
-//        make.height.equalTo(20);
-//        make.width.equalTo(40);
-//    }];
-//    
-//    [self.speedTip makeConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.left.equalTo(self.level.right).offset(10);
-//        make.centerY.equalTo(self.level);
-//        make.height.equalTo(20);
-//    }];
     
     [self.adImageView makeConstraints:^(MASConstraintMaker *make) {
        
@@ -148,7 +115,7 @@
     if (section == 0) {
         return 1;
     }
-    return 5;
+    return self.dataSource.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -183,6 +150,40 @@
         
         //拿到我们的LitterLCenterViewController，让它去push
       
+        //当我们push成功之后，关闭我们的抽屉
+        [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+            //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
+            [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+        }];
+    }
+    
+    if (indexPath.section == 1 && indexPath.row == 1) {
+        
+        MineCardsController *cardController = [[MineCardsController alloc] init];
+        cardController.jz_wantsNavigationBarVisible = YES;
+        cardController.jz_navigationBarTintColor = WhiteColor;
+        UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+        [nav pushViewController:cardController animated:NO];
+        
+        //拿到我们的LitterLCenterViewController，让它去push
+        
+        //当我们push成功之后，关闭我们的抽屉
+        [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+            //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
+            [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+        }];
+    }
+    
+    if (indexPath.section == 1 && indexPath.row == 4) {
+        
+        ZTAroundController *aroundController = [[ZTAroundController alloc] init];
+        aroundController.jz_wantsNavigationBarVisible = YES;
+        aroundController.jz_navigationBarTintColor = WhiteColor;
+        UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+        [nav pushViewController:aroundController animated:NO];
+        
+        //拿到我们的LitterLCenterViewController，让它去push
+        
         //当我们push成功之后，关闭我们的抽屉
         [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
             //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
@@ -246,10 +247,16 @@
         [_dataSource addObject:model4];
 
         LeftCommonCellModel *model5 = [[LeftCommonCellModel alloc] init];
-        model5.leftImage = @"setting_33x33";
-        model5.title = @"我的设置";
-        model5.destinationVc = @"setting_33x33";
+        model5.leftImage = @"leftAround_33x33";
+        model5.title = @"我的周边";
+        model5.destinationVc = @"leftAround_33x33";
         [_dataSource addObject:model5];
+        
+        LeftCommonCellModel *model6 = [[LeftCommonCellModel alloc] init];
+        model6.leftImage = @"setting_33x33";
+        model6.title = @"我的设置";
+        model6.destinationVc = @"setting_33x33";
+        [_dataSource addObject:model6];
         
     }
     return _dataSource;
@@ -262,12 +269,12 @@
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kSCREENWIDTH, kSCREENHEIGHT-84) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-//        _tableView.scrollEnabled = NO;
         _tableView.contentInset = UIEdgeInsetsMake(-20, 0, 30, 0);
         _tableView.tableFooterView = [[UIView alloc] init];
-//        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_tableView registerClass:[LeftAchievementCell class] forCellReuseIdentifier:LeftAchievementCellId];
         [_tableView registerClass:[LeftCommonCell class] forCellReuseIdentifier:LeftCommonCellId];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.showsVerticalScrollIndicator = NO;
     }
     return _tableView;
 }

@@ -85,8 +85,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    ArticleCellModel *model = self.dataSource[indexPath.row];
     ArticleDetailViewController *detail = [[ArticleDetailViewController alloc] init];
+    detail.url = model.url;
     [self.navigationController pushViewController:detail animated:YES];
 }
 
@@ -107,7 +108,7 @@
     cell.leftImageView.image = imageNamed(model.image);
     cell.title.text = model.title;
     cell.ratingView.currentScore = 9.5f;
-    cell.tagLabel.text = @"汽车";
+    cell.tagLabel.text = @"瘦身";
     cell.usedTimes.text = model.usedTimes;
     return cell;
     

@@ -29,6 +29,7 @@
     self.navigationItem.title = @"选择广告";
     [self configSubView];
     [self loadData];
+    
 }
 
 - (void)configSubView {
@@ -99,9 +100,9 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [[UIView alloc] init];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MainAdCell class]) bundle:nil] forCellReuseIdentifier:adCellId];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
     }
     return _tableView;

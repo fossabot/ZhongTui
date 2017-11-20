@@ -13,6 +13,7 @@
 @property (nonatomic, copy) NSString *image;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *usedTimes;
+@property (nonatomic, copy) NSString *url;
 
 @end
 

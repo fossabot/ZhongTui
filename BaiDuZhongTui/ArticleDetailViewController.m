@@ -48,7 +48,7 @@ static NSString * urlstr = @"http://test.ywvx.com/zhongtui/articleDetails.html";
         make.height.equalTo(60);
     }];
     
-    NSURL *url = [NSURL URLWithString:urlstr];
+    NSURL *url = [NSURL URLWithString:self.url];
     [web loadRequest:[NSURLRequest requestWithURL:url]];
     
 }
@@ -85,7 +85,7 @@ static NSString * urlstr = @"http://test.ywvx.com/zhongtui/articleDetails.html";
 - (void)share {
     
     YYWeakSelf
-    [ShareView shareWithTitle:self.navigationItem.title subTitle:@"" webUrl:urlstr imageUrl:nil isCollected:NO shareViewContain:nil shareContentType:ShareContentTypeWeb finished:^(ShareViewType shareViewType, BOOL isFavor, BOOL success) {
+    [ShareView shareWithTitle:self.navigationItem.title subTitle:@"" webUrl:self.url imageUrl:nil isCollected:NO shareViewContain:nil shareContentType:ShareContentTypeWeb finished:^(ShareViewType shareViewType, BOOL isFavor, BOOL success) {
         
         if (success) {//分享成功回调
             

@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "timg-9.jpeg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "wechat_24x24@2x.png",
       "scale" : "2x"
     },
     {

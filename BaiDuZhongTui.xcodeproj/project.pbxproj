@@ -48,6 +48,11 @@
 		F6B210EF1FAAB90700B03BA0 /* BaiDuZhongTuiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B210EE1FAAB90700B03BA0 /* BaiDuZhongTuiTests.m */; };
 		F6B210FA1FAAB90700B03BA0 /* BaiDuZhongTuiUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B210F91FAAB90700B03BA0 /* BaiDuZhongTuiUITests.m */; };
 		F6B211091FAABC0900B03BA0 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B211081FAABC0900B03BA0 /* MainViewController.m */; };
+		F6D09EFB1FBD793100A0F08F /* MineWithdrawMoneyController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D09EFA1FBD793100A0F08F /* MineWithdrawMoneyController.m */; };
+		F6D09EFF1FBE139000A0F08F /* MineCardsController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D09EFE1FBE139000A0F08F /* MineCardsController.m */; };
+		F6D09F021FBE1A0400A0F08F /* ZTMineCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D09F011FBE1A0400A0F08F /* ZTMineCardCell.m */; };
+		F6D09F051FBE1C4F00A0F08F /* ZTWithdrawMoneyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D09F041FBE1C4F00A0F08F /* ZTWithdrawMoneyCell.m */; };
+		F6D09F091FBE2FF800A0F08F /* ZTAroundController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6D09F081FBE2FF800A0F08F /* ZTAroundController.m */; };
 		F6DAA4B01FAEF55C00F461FC /* MineWalletController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6DAA4AF1FAEF55C00F461FC /* MineWalletController.m */; };
 		F6DAA4B41FAEFBEA00F461FC /* THBaseScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6DAA4B31FAEFBEA00F461FC /* THBaseScrollViewController.m */; };
 		F6DAA4B81FAF4FAB00F461FC /* YYUMShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F6DAA4B71FAF4FAB00F461FC /* YYUMShareManager.m */; };
@@ -170,6 +175,16 @@
 		F6B210FB1FAAB90700B03BA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6B211071FAABC0900B03BA0 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		F6B211081FAABC0900B03BA0 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		F6D09EF91FBD793100A0F08F /* MineWithdrawMoneyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineWithdrawMoneyController.h; sourceTree = "<group>"; };
+		F6D09EFA1FBD793100A0F08F /* MineWithdrawMoneyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineWithdrawMoneyController.m; sourceTree = "<group>"; };
+		F6D09EFD1FBE139000A0F08F /* MineCardsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineCardsController.h; sourceTree = "<group>"; };
+		F6D09EFE1FBE139000A0F08F /* MineCardsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineCardsController.m; sourceTree = "<group>"; };
+		F6D09F001FBE1A0400A0F08F /* ZTMineCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZTMineCardCell.h; sourceTree = "<group>"; };
+		F6D09F011FBE1A0400A0F08F /* ZTMineCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZTMineCardCell.m; sourceTree = "<group>"; };
+		F6D09F031FBE1C4F00A0F08F /* ZTWithdrawMoneyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZTWithdrawMoneyCell.h; sourceTree = "<group>"; };
+		F6D09F041FBE1C4F00A0F08F /* ZTWithdrawMoneyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZTWithdrawMoneyCell.m; sourceTree = "<group>"; };
+		F6D09F071FBE2FF800A0F08F /* ZTAroundController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZTAroundController.h; sourceTree = "<group>"; };
+		F6D09F081FBE2FF800A0F08F /* ZTAroundController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZTAroundController.m; sourceTree = "<group>"; };
 		F6DAA4AE1FAEF55C00F461FC /* MineWalletController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineWalletController.h; sourceTree = "<group>"; };
 		F6DAA4AF1FAEF55C00F461FC /* MineWalletController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineWalletController.m; sourceTree = "<group>"; };
 		F6DAA4B21FAEFBEA00F461FC /* THBaseScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THBaseScrollViewController.h; sourceTree = "<group>"; };
@@ -456,6 +471,8 @@
 		F6B210D31FAAB90700B03BA0 /* BaiDuZhongTui */ = {
 			isa = PBXGroup;
 			children = (
+				F6D09F061FBE2FD100A0F08F /* around */,
+				F6D09EFC1FBE135400A0F08F /* cards */,
 				F6DAA4B51FAF4F9500F461FC /* Tools */,
 				F6DAA4AD1FAEF53300F461FC /* wallet */,
 				F64DC6691FAB53C400F2A17D /* vendors */,
@@ -507,11 +524,35 @@
 			path = BaiDuZhongTuiUITests;
 			sourceTree = "<group>";
 		};
+		F6D09EFC1FBE135400A0F08F /* cards */ = {
+			isa = PBXGroup;
+			children = (
+				F6D09EFD1FBE139000A0F08F /* MineCardsController.h */,
+				F6D09EFE1FBE139000A0F08F /* MineCardsController.m */,
+				F6D09F001FBE1A0400A0F08F /* ZTMineCardCell.h */,
+				F6D09F011FBE1A0400A0F08F /* ZTMineCardCell.m */,
+			);
+			name = cards;
+			sourceTree = "<group>";
+		};
+		F6D09F061FBE2FD100A0F08F /* around */ = {
+			isa = PBXGroup;
+			children = (
+				F6D09F071FBE2FF800A0F08F /* ZTAroundController.h */,
+				F6D09F081FBE2FF800A0F08F /* ZTAroundController.m */,
+			);
+			name = around;
+			sourceTree = "<group>";
+		};
 		F6DAA4AD1FAEF53300F461FC /* wallet */ = {
 			isa = PBXGroup;
 			children = (
 				F6DAA4AE1FAEF55C00F461FC /* MineWalletController.h */,
 				F6DAA4AF1FAEF55C00F461FC /* MineWalletController.m */,
+				F6D09EF91FBD793100A0F08F /* MineWithdrawMoneyController.h */,
+				F6D09EFA1FBD793100A0F08F /* MineWithdrawMoneyController.m */,
+				F6D09F031FBE1C4F00A0F08F /* ZTWithdrawMoneyCell.h */,
+				F6D09F041FBE1C4F00A0F08F /* ZTWithdrawMoneyCell.m */,
 			);
 			name = wallet;
 			sourceTree = "<group>";
@@ -609,6 +650,7 @@
 		F6B210C91FAAB90700B03BA0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = ZT;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = YiWangTech;
 				TargetAttributes = {
@@ -861,12 +903,14 @@
 				F64DC6B21FAB868A00F2A17D /* LeftCommonCellModel.m in Sources */,
 				F64DC6901FAB5C0500F2A17D /* UIToolbar+JZExtension.m in Sources */,
 				F64DC68E1FAB5C0500F2A17D /* NSNumber+JZExtension.m in Sources */,
+				F6D09F021FBE1A0400A0F08F /* ZTMineCardCell.m in Sources */,
 				F64DC6431FAB06DA00F2A17D /* PlaceHolderView.m in Sources */,
 				F64DC6911FAB5C0500F2A17D /* UINavigationController+JZExtension.m in Sources */,
 				F64DC6A01FAB656000F2A17D /* MainAdCell.m in Sources */,
 				F64DC6481FAB0CF700F2A17D /* AdvertisementController.m in Sources */,
 				F64DC6AF1FAB797900F2A17D /* LeftAchievementCell.m in Sources */,
 				F6DAA4CC1FAF806500F461FC /* YYEdgeLabel.m in Sources */,
+				F6D09F091FBE2FF800A0F08F /* ZTAroundController.m in Sources */,
 				F64DC6B91FAC442B00F2A17D /* ArticleViewController.m in Sources */,
 				F64DC6591FAB439800F2A17D /* MainButtonCell.m in Sources */,
 				F64DC68C1FAB5C0500F2A17D /* _JZNavigationInteractiveTransition.m in Sources */,
@@ -875,14 +919,17 @@
 				F64DC6551FAB1E9900F2A17D /* MainTableViewCell.m in Sources */,
 				F64DC6BD1FAC601D00F2A17D /* LEEStarRating.m in Sources */,
 				F6B210D61FAAB90700B03BA0 /* main.m in Sources */,
+				F6D09EFF1FBE139000A0F08F /* MineCardsController.m in Sources */,
 				F6DAA4C61FAF73BC00F461FC /* AppDelegate+ZZCategory.m in Sources */,
 				F64DC6651FAB537E00F2A17D /* UIView+YYViewFrame.m in Sources */,
+				F6D09F051FBE1C4F00A0F08F /* ZTWithdrawMoneyCell.m in Sources */,
 				F6DAA4C11FAF6F7F00F461FC /* BAButton.m in Sources */,
 				F64DC6961FAB64EA00F2A17D /* MainSearchCell.m in Sources */,
 				F6DAA4B41FAEFBEA00F461FC /* THBaseScrollViewController.m in Sources */,
 				F6DAA4BB1FAF501100F461FC /* ShareView.m in Sources */,
 				F64DC68F1FAB5C0500F2A17D /* UINavigationBar+JZExtension.m in Sources */,
 				F64DC6B51FAC391400F2A17D /* LeftCommonCell.m in Sources */,
+				F6D09EFB1FBD793100A0F08F /* MineWithdrawMoneyController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1037,7 +1084,7 @@
 				INFOPLIST_FILE = BaiDuZhongTui/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhong.testing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhongtui;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1052,7 +1099,7 @@
 				INFOPLIST_FILE = BaiDuZhongTui/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhong.testing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhongtui;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -10,4 +10,5 @@
 
 @interface ArticleDetailViewController : UIViewController
 
+@property (nonatomic, copy) NSString *url;
 @end

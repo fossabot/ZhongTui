@@ -22,15 +22,13 @@
 #import "JZNavigationExtension.h"
 
 #import <MBProgressHUD.h>
-#import "MMExampleDrawerVisualStateManager.h"
-#import "UIViewController+MMDrawerController.h"
 
 //打印该方法的名称，在方法内调用
 #define YYLogFunc YYLog(@"%s---%@", __func__,NSStringFromClass([self class]));
 
 //设置debug的两种状态下打印（发布状态下不打印，省资源）
 #ifdef DEBUG // 处于开发阶段
-#define YYLog(...) NSLog(@"%s 第%d行 \n %@\n\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
+#define YYLog(...) NSLog(@"%s 在第%d行 \n %@\n\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
 #else // 处于发布阶段
 #define YYLog(...)
 #endif

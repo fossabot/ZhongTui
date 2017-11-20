@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "timg-8.jpeg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "leftAround_33x33@2x.png",
       "scale" : "2x"
     },
     {

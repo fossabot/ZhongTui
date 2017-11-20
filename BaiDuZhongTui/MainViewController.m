@@ -58,6 +58,19 @@
    
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [self.mm_drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+    [self.mm_drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
+}
+
 - (void)loadData {
     
     self.dataSource = [AdModel mj_objectArrayWithFilename:@"ad.plist"];
@@ -209,13 +222,13 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.tableFooterView = [[UIView alloc] init];
-//        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MainSearchCell class]) bundle:nil] forCellReuseIdentifier:searchCellId];
         [_tableView registerClass:[MainScrollCell class] forCellReuseIdentifier:scrollCellId];
         [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([MainAdCell class]) bundle:nil] forCellReuseIdentifier:adCellId];
         
         [_tableView registerClass:[MainButtonCell class] forCellReuseIdentifier:buttonCellId];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
     }
     return _tableView;

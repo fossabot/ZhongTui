@@ -73,22 +73,22 @@ NSInteger const verificationLength = 6;
 NSString * const USHARE_APPKEY = @"5a0266de8f4a9d1bc5000069";
 
 /** qq开放平台APPID 和 QQ互联的APPID一致*/
-NSString * const QQ_APPID = @"1106083026";
+NSString * const QQ_APPID = @"1106454167";
 
 /** qq开放平台APPKEY*/
-NSString * const QQ_APPKEY = @"hL9J2bRjcsbTPpad";
+NSString * const QQ_APPKEY = @"v8XNYPspV8L1GT6M";
 
 /** 微信APPID*/
-NSString * const WECHAT_APPID = @"wx5e1bd2b1c2d79e52";
+NSString * const WECHAT_APPID = @"wxb7115c36f5d4325b";
 
 /** 微信APPSECRET*/
-NSString * const WECHAT_APPSECRET = @"d8dd1d90bee5fe3a11d54102e0360ed7";
+NSString * const WECHAT_APPSECRET = @"e68db74b53ca36e21134f6c63d733dc0";
 
 /** 新浪APPID*/
-NSString * const SINA_APPKEY = @"242133346";
+NSString * const SINA_APPKEY = @"1029653543";
 
 /** 新浪APPSECRET*/
-NSString * const SINA_APPSECRET = @"4f5fbcc22f6998670e806f3e87a7241a";
+NSString * const SINA_APPSECRET = @"7dd9d036191294b4b3ebc2eb2c83646e";
 
 
 #pragma mark ------------------------  友盟推送   ----------------------------

@@ -7,6 +7,10 @@
 //
 
 #import "MineWalletController.h"
+#import "MineWithdrawMoneyController.h"
+
+#import "MMExampleDrawerVisualStateManager.h"
+#import "UIViewController+MMDrawerController.h"
 
 @interface MineWalletController ()
 
@@ -27,7 +31,7 @@
     [super viewWillAppear:animated];
     
     //关闭抽屉模式
-    [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+//    [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
     
 }
 
@@ -128,19 +132,9 @@
 /* 提现*/
 - (void)withDrawMoneyClick:(UIButton *)sender {
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提现成功" message:@"提现金额会以微信红包的形式发放到用户的微信中，注意查收!\n首次提现，系统奖励您1元，祝您财源滚滚哦！" preferredStyle:UIAlertControllerStyleAlert];
+    MineWithdrawMoneyController *withdrawVc = [[MineWithdrawMoneyController alloc] init];
+    [self.navigationController pushViewController:withdrawVc animated:YES];
     
-//    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//        YYLog(@"点击了取消");
-//    }]];
-    
-    YYWeakSelf
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-//        weakSelf.currentMoneyValue.text = @"0.00元";
-    }]];
-    
-    [kKeyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
 }
 
 @end
