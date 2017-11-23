@@ -31,7 +31,6 @@
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
 
-
 @end
 
 @implementation MainViewController
@@ -44,9 +43,6 @@
     }
     return self;
 }
-
-
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];

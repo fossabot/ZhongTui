@@ -70,10 +70,10 @@ NSInteger const verificationLength = 6;
 #pragma mark -----------------------  友盟分享的三方数据  -------------------------
 
 /** 友盟APPKEY*/
-NSString * const USHARE_APPKEY = @"5a0266de8f4a9d1bc5000069";
+NSString * const USHARE_APPKEY = @"5a12908fb27b0a44f000000d";
 
 /** qq开放平台APPID 和 QQ互联的APPID一致*/
-NSString * const QQ_APPID = @"1106454167";
+NSString * const QQ_APPID = @"1106454167"; 
 
 /** qq开放平台APPKEY*/
 NSString * const QQ_APPKEY = @"v8XNYPspV8L1GT6M";

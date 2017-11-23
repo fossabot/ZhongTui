@@ -165,7 +165,7 @@
     cell.title.text = title;
     cell.subTitle.text = subTitle;
     
-    if (_lastIndexPath == indexPath) {
+    if (_lastIndexPath.row == indexPath.row) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else {
         cell.accessoryType = UITableViewCellAccessoryNone;
