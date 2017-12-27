@@ -1,0 +1,180 @@
+//
+//  PrefixHeader.pch
+//  BaiDuZhongTui
+//
+//  Created by Vincent on 2017/11/2.
+//  Copyright © 2017年 YiWangTech. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+//masonry的两个头文件的宏（省略mas_前缀）
+#define MAS_SHORTHAND
+#define MAS_SHORTHAND_GLOBALS
+
+#import "ZTConst.h"
+#import "Marco.h"
+#import "Api.h"
+
+#import "Masonry.h"
+
+#import "UIView+ZTViewFrame.h"
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
+#import "MBProgressHUD+THHUD.h"
+#import "JZNavigationExtension.h"
+#import "PPNetworkHelper.h"
+#import <FORScrollViewEmptyAssistant/FORScrollViewEmptyAssistant.h>
+//#import <MBProgressHUD.h>
+
+//打印该方法的名称，在方法内调用
+#define ZTLogFunc ZTLog(@"%s---%@", __func__,NSStringFromClass([self class]));
+
+//设置debug的两种状态下打印（发布状态下不打印，省资源）
+#ifdef DEBUG // 处于开发阶段
+#define ZTLog(...) NSLog(@"%s 在第%d行 \n %@\n\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
+#else // 处于发布阶段
+#define ZTLog(...)
+#endif
+
+#define MainViewControllerIdetifier @"mainViewControllerId"
+#define LeftViewControllerIdetifier @"leftViewControllerId"
+#define MMDrawerControllerIdetifier @"MMDrawerControllerId"
+
+//颜色的宏定义设置
+#define ZTRGB(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+#define ZTRGBA(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a]
+//随机色
+#define ZTRandomColor HBRGB(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
+
+//导航栏，主体颜色等宏设定
+#define NaviColor  UIColorFromHex(0x262930)
+#define ThemeColor UIColorFromHex(0x1946da)  //项目的主题色
+#define TitleColor  UIColorFromHex(0x333333)  //项目标题文字的颜色
+#define SubTitleColor  UIColorFromHex(0x666666)  //项目副标题文字的颜色
+#define UnenableTitleColor  UIColorFromHex(0x999999)  //项目失活的文字或者来源时间等颜色
+#define GrayBackGroundColor   UIColorFromHex(0xeeeeee)  //项目主体的背景色
+#define LightGraySeperatorColor    UIColorFromHex(0xe5e5e5)  //项目浅色分隔线颜色
+#define GraySeperatorColor         UIColorFromHex(0xcccccc)  //项目深色分隔线颜色
+#define UIColorFromHex(s) [UIColor colorWithRed:(((s & 0xFF0000) >> 16 )) / 255.0 green:((( s & 0xFF00 ) >> 8 )) / 255.0 blue:(( s & 0xFF )) / 255.0 alpha:1.0] //将Hexcoclor转成RGBcolor
+
+
+#define WhiteColor [UIColor whiteColor]
+#define BlackColor [UIColor blackColor]
+#define GrayColor  [UIColor grayColor]
+#define ClearColor  [UIColor clearColor]
+
+
+#define NavTitleFont sysFont(18)  //导航栏文字大小
+#define TitleFont  sysFont(16)  //项目标题文字的字体
+#define SubTitleFont  sysFont(14)  //项目副标题文字的字体
+#define UnenableTitleFont  sysFont(12)  //项目失活的文字或者来源时间等字体
+
+
+
+//弱引用
+#define ZTWeakSelf  __weak typeof(self) weakSelf = self;
+//强引用
+#define ZTStrongSelf  __strong typeof(self) strongSelf = weakSelf;
+
+#define weakObject(object) __weak typeof(object) weak##object = object;
+
+///简化UIimage的图片设置方法
+#define imageNamed(name)  [UIImage imageNamed:name]
+///简化string转url的方法
+#define urlString(string)  [NSURL URLWithString:string]
+///简化系统字体大小方法
+#define sysFont(float)  [UIFont systemFontOfSize:float]
+//根据cell的类名返回reuseidentifier
+#define cellIdentifier(class)   NSStringFromClass(class)
+//APP不同尺寸手机的缩放系数。以320宽的屏幕为基准，通常高度不用考虑适配，因为高度大多需要拉伸
+#define afterScale(s) (fabs(s*[[UIScreen mainScreen] bounds].size.width/320))
+
+
+#define heightRatio  fabs(kSCREENHEIGHT/568)
+
+///application单例
+#define kApplication        [UIApplication sharedApplication]
+///keywindow单例
+#define kKeyWindow          [UIApplication sharedApplication].keyWindow
+///主屏幕单例
+#define kMainScreen         [UIScreen mainScreen]
+///APPdelegate
+#define kAppDelegate        [UIApplication sharedApplication].delegate
+
+
+
+#pragma mark ------------------ 单例宏 ---------------------------
+
+///.h文件中实现 自动拼接shared在头部
+#define ZTSingletonH(name) +(instancetype)share##name;
+
+///.m文件中实现
+#if __has_feature(objc_arc)
+
+#define ZTSingletonM(name) static id _instance;\
++(instancetype)allocWithZone:(struct _NSZone *)zone\
+{\
+static dispatch_once_t onceToken;\
+dispatch_once(&onceToken, ^{\
+_instance = [super allocWithZone:zone];\
+});\
+return _instance;\
+}\
+\
++(instancetype)share##name\
+{\
+return [[self alloc]init];\
+}\
+-(id)copyWithZone:(NSZone *)zone\
+{\
+return _instance;\
+}\
+\
+-(id)mutableCopyWithZone:(NSZone *)zone\
+{\
+return _instance;\
+}
+
+
+#else
+#define singleM static id _instance;\
++(instancetype)allocWithZone:(struct _NSZone *)zone\
+{\
+static dispatch_once_t onceToken;\
+dispatch_once(&onceToken, ^{\
+_instance = [super allocWithZone:zone];\
+});\
+return _instance;\
+}\
+\
++(instancetype)shareTools\
+{\
+return [[self alloc]init];\
+}\
+-(id)copyWithZone:(NSZone *)zone\
+{\
+return _instance;\
+}\
+\
+-(id)mutableCopyWithZone:(NSZone *)zone\
+{\
+return _instance;\
+}\
+-(oneway void)release\
+{\
+}\
+\
+-(instancetype)retain\
+{\
+return _instance;\
+}\
+\
+-(NSUInteger)retainCount\
+{\
+return MAXFLOAT;\
+}
+#endif
+
+#endif /* PrefixHeader_pch */

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZTUserInfoController">
+            <connections>
+                <outlet property="icon" destination="7mu-GN-tTJ" id="HTr-gT-x5p"/>
+                <outlet property="userTableview" destination="KES-4M-s8L" id="zLX-gC-CZd"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7mu-GN-tTJ">
+                    <rect key="frame" x="157" y="100" width="60" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="GYB-uF-D6W"/>
+                        <constraint firstAttribute="height" constant="60" id="yI7-ix-GhZ"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="iconClick:" destination="-1" eventType="touchUpInside" id="Xl3-zn-WVj"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="KES-4M-s8L" customClass="ZTTableView">
+                    <rect key="frame" x="0.0" y="210" width="375" height="457"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="pum-8R-L3k"/>
+                        <outlet property="delegate" destination="-1" id="cgm-YY-ndc"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="KES-4M-s8L" secondAttribute="bottom" id="ANS-VF-OTt"/>
+                <constraint firstItem="7mu-GN-tTJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="LyX-2u-y0s"/>
+                <constraint firstItem="KES-4M-s8L" firstAttribute="top" secondItem="7mu-GN-tTJ" secondAttribute="bottom" constant="50" id="QNc-c0-UqS"/>
+                <constraint firstItem="7mu-GN-tTJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="VdC-OM-niO"/>
+                <constraint firstAttribute="trailing" secondItem="KES-4M-s8L" secondAttribute="trailing" id="jLE-N3-u5G"/>
+                <constraint firstItem="KES-4M-s8L" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qe8-eR-CtQ"/>
+            </constraints>
+        </view>
+    </objects>
+</document>
