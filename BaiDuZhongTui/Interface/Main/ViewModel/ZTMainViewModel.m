@@ -9,9 +9,6 @@
 #import "ZTMainViewModel.h"
 #import "ZTAdModel.h"
 
-#import "AdvertisementController.h"
-#import "ArticleViewController.h"
-
 #import "MainButtonCell.h"
 #import "MainSearchCell.h"
 #import "MainScrollCell.h"
@@ -43,7 +40,7 @@
     NSDictionary *para = [NSDictionary dictionaryWithObjectsAndKeys:@"ad",PARAC,@"getDefault",PARAM,@(_times),TIMES, nil];
     [PPNetworkHelper POST:BaseUrl parameters:para success:^(id responseObject) {
         
-        if (responseObject && [responseObject[STATE] isEqualToNumber:@0]) {
+        if (responseObject && [responseObject[STATE] isEqualToString:@"0"]) {
             self.dataSource = [ZTAdModel mj_objectArrayWithKeyValuesArray:responseObject[@"ad_arr"]];
             completion(YES);
         }else {
@@ -65,7 +62,7 @@
     NSDictionary *para = [NSDictionary dictionaryWithObjectsAndKeys:@"ad",PARAC,@"getDefault",PARAM,@(_times),TIMES, nil];
     [PPNetworkHelper POST:BaseUrl parameters:para success:^(id responseObject) {
      
-        if (responseObject && [responseObject[STATE] isEqualToNumber:@0]) {
+        if (responseObject && [responseObject[STATE] isEqualToString:@"0"]) {
             
             NSMutableArray *arr = [ZTAdModel mj_objectArrayWithKeyValuesArray:responseObject[@"ad_arr"]];
             if (arr.count) {
@@ -139,6 +136,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     ZTAdModel *model = self.dataSource[indexPath.row];
+   
     if (indexPath.section == 3) {
         
         if (self.cellSelectBlock) {
@@ -164,7 +162,14 @@
         return cell;
     }else if (indexPath.section == 2) {
         
+        ZTWeakSelf
         MainButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:buttonCellId];
+        cell.selectedBlock = ^(UIButton *selectedBtn) {
+          
+            if (weakSelf.tenVocationBlock) {
+                weakSelf.tenVocationBlock(selectedBtn);
+            }
+        };
         
         return cell;
     }else {

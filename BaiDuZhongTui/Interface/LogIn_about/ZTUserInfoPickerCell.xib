@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ZTUserInfoPickerCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="106"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提示" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Few-5G-wjt">
+                    <rect key="frame" x="20" y="42.5" width="35" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEy-DT-eOj">
+                    <rect key="frame" x="70" y="36.5" width="285" height="33"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="个人信息">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="editUserInfo:" destination="iN0-l3-epB" eventType="touchUpInside" id="hhQ-iS-y41"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Two-UU-6SN" userLabel="bottomView">
+                    <rect key="frame" x="20" y="105.5" width="335" height="0.5"/>
+                    <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.5" id="uDN-3p-zLp"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="TEy-DT-eOj" secondAttribute="trailing" constant="20" id="4FG-L3-1WY"/>
+                <constraint firstItem="TEy-DT-eOj" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="4ee-BR-aaO"/>
+                <constraint firstItem="Few-5G-wjt" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="FqS-x1-rVG"/>
+                <constraint firstItem="Two-UU-6SN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="KmX-9z-1Q6"/>
+                <constraint firstItem="TEy-DT-eOj" firstAttribute="leading" secondItem="Few-5G-wjt" secondAttribute="trailing" constant="15" id="Mpe-Xp-27h"/>
+                <constraint firstAttribute="bottom" secondItem="Two-UU-6SN" secondAttribute="bottom" id="UeF-n1-rQj"/>
+                <constraint firstAttribute="trailing" secondItem="Two-UU-6SN" secondAttribute="trailing" constant="20" id="dkz-eN-1eN"/>
+                <constraint firstItem="Few-5G-wjt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="gDZ-bD-kt5"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="leftLabel" destination="Few-5G-wjt" id="WsU-Yl-yyX"/>
+                <outlet property="userinfoPickerBtn" destination="TEy-DT-eOj" id="mdE-tX-oYd"/>
+            </connections>
+            <point key="canvasLocation" x="33.5" y="332"/>
+        </view>
+    </objects>
+</document>

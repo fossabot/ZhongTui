@@ -2,7 +2,7 @@
 //  MainButtonCell.m
 //  BaiDuZhongTui
 //
-//  Created by 杨春禹 on 2017/11/2.
+//  Created by VINCENT on 2017/11/2.
 //  Copyright © 2017年 YiWangTech. All rights reserved.
 //
 
@@ -59,15 +59,16 @@ static CGFloat const buttonH = 60;
         [btn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 20, 0)];
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(30, -55, -20, 0)];
         btn.tag = 100+i;
-//        [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
         [arr addObject:btn];
         [self.contentView addSubview:btn];
+        [btn addTarget:self action:@selector(buttonDidSelected:) forControlEvents:UIControlEventTouchUpInside];
+
     }
     
     [arr mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedItemLength:buttonW leadSpacing:afterScale(20) tailSpacing:afterScale(20)];
     [arr makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(10);
-        make.height.equalTo(60);
+        make.height.equalTo(buttonH);
     }];
     
     NSMutableArray *arr1 = [NSMutableArray array];
@@ -81,24 +82,32 @@ static CGFloat const buttonH = 60;
         [btn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 20, 0)];
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(30, -55, -20, 0)];
         btn.tag = 100+i;
-//        [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
         [arr1 addObject:btn];
         [self.contentView addSubview:btn];
         
-        if (i==7) {
-            btn.userInteractionEnabled = NO;
-        }
+        [btn addTarget:self action:@selector(buttonDidSelected:) forControlEvents:UIControlEventTouchUpInside];
+//        if (i==7) {
+//            btn.userInteractionEnabled = NO;
+//        }
     }
     
     UIButton *btn = arr[0];
     [arr1 mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedItemLength:buttonW leadSpacing:afterScale(20) tailSpacing:afterScale(20)];
     [arr1 makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(btn.bottom).offset(10);
-        make.height.equalTo(60);
+        make.height.equalTo(buttonH);
         make.bottom.equalTo(-10);
     }];
 }
 
+
+/** 十大行业按钮选中的回调*/
+- (void)buttonDidSelected:(UIButton *)selectedBtn {
+    
+    if (_selectedBlock) {
+        _selectedBlock(selectedBtn);
+    }
+}
 
 
 #pragma mark -- lazyMethods 懒加载区域  --------------------------

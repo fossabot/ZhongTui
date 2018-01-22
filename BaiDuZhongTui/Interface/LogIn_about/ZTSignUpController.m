@@ -370,7 +370,6 @@
 - (void)registeButtonClick:(UIButton *)sender {
 
     //发送手机号 验证码 密码等给后台  注册用户  同时密码加密
-    
     [ZTUserManager registeAccount:self.telephoneTextfield.text verification:self.verificationTextfield.text password:self.passwordTextfield.text response:^(BOOL success) {
        
         if (success) {
@@ -379,39 +378,14 @@
             [kUserDefaults setBool:YES forKey:LOGINSTATUS];
             [kUserDefaults synchronize];
             [kNotificationCenter postNotificationName:ZTUserInfoDidChangedNotification object:nil userInfo:@{LASTLOGINSTATUS:@NO}];
+            [kNotificationCenter postNotificationName:ZTLoginStatusDidChangedNotification object:nil];
             
 //注册成功，返回到顶层，如果没有返回个人信息，那就调登录接口
-            UIViewController *vc = self;
-            while (vc.presentingViewController) {
-                vc = vc.presentingViewController;
-            }
-            [vc dismissViewControllerAnimated:YES completion:nil];
-
+            [self dismissCompletely];
         }else {
             ZTLog(@"注册失败");
         }
     }];
-    
-//    [ZTLoginManager registeAccount:self.telephoneTextfield.text verification:self.verificationTextfield.text password:self.passwordTextfield.text response:^(BOOL success) {
-//
-//        if (success) {
-//            [SAMKeychain setPassword:self.passwordTextfield.text forService:KEYCHAIN_SERVICE_LOGIN account:self.telephoneTextfield.text];
-//            //注册成功，返回主界面，更新个人信息，刷新主界面等操作
-//            [kUserDefaults setBool:YES forKey:LOGINSTATUS];
-//            [kUserDefaults synchronize];
-//            [kNotificationCenter postNotificationName:ZTUserInfoDidChangedNotification object:nil userInfo:@{LASTLOGINSTATUS:@"0"}];
-//            //注册成功，返回到顶层，如果没有返回个人信息，那就调登录接口
-//            UIViewController *vc = self;
-//            while (vc.presentingViewController) {
-//                vc = vc.presentingViewController;
-//            }
-//            [vc dismissViewControllerAnimated:YES completion:nil];
-//
-//        }else{
-//            //注册失败
-//            ZTLog(@"注册失败");
-//        }
-//    }];
     
 }
 

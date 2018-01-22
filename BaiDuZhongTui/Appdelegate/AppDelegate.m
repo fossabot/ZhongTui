@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  BaiDuZhongTui
 //
-//  Created by 杨春禹 on 2017/11/2.
+//  Created by VINCENT on 2017/11/2.
 //  Copyright © 2017年 YiWangTech. All rights reserved.
 //
 
@@ -46,7 +46,6 @@
     [self.drawerController setShowsShadow:NO];
     [self.drawerController setRestorationIdentifier:MMDrawerControllerIdetifier];
     [self.drawerController setMaximumLeftDrawerWidth:280.0];
-    [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     [self.drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     [[MMExampleDrawerVisualStateManager sharedManager] setLeftDrawerAnimationType:MMDrawerAnimationTypeParallax];
 

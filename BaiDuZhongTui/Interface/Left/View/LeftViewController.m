@@ -2,7 +2,7 @@
 //  LeftViewController.m
 //  BaiDuZhongTui
 //
-//  Created by 杨春禹 on 2017/11/2.
+//  Created by VINCENT on 2017/11/2.
 //  Copyright © 2017年 YiWangTech. All rights reserved.
 //
 
@@ -14,11 +14,11 @@
 #import "MineWalletController.h"
 #import "ZTAroundController.h"
 #import "MineCardsController.h"
-#import "LoginedHeader.h"
 #import "UnloginHeader.h"
+#import "LoginHeader.h"
 #import "ZTUserInfoController.h"
 #import "ZTLogInController.h"
-
+#import "ZTInviteController.h"
 
 #import "ZTUser.h"
 #import "ZTTableView.h"
@@ -35,7 +35,7 @@ static CGFloat leftViewWidth = 100;
 
 @property (nonatomic, strong) UIView *header;
 
-@property (nonatomic, strong) LoginedHeader *loginedHeader;
+@property (nonatomic, strong) LoginHeader *loginHeader;
 
 @property (nonatomic, strong) UnloginHeader *unloginHeader;
 
@@ -99,21 +99,28 @@ static CGFloat leftViewWidth = 100;
     if (!notice) {
         //没有notice代表是初始化控制器的View，只需直接判断登录状态，直接装载相应的header
         if (user.isLogin) {
-            self.tableView.tableHeaderView = self.loginedHeader;
+            [self.loginHeader setUser:user];
+            self.tableView.tableHeaderView = self.loginHeader;
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
         }else{
+            
+            [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
             self.tableView.tableHeaderView = self.unloginHeader;
         }
         
     }else {
         //有notice代表是初始化完毕View之后有发生登录退出或者改变个人信息的相应操作了
-        BOOL lastLoginStatus = notice.userInfo[LASTLOGINSTATUS];
+        BOOL lastLoginStatus = [notice.userInfo[LASTLOGINSTATUS] boolValue];
         if (lastLoginStatus && user.isLogin) {
             //过去是登录，现在还是登录，只是修改个人信息
-            [self.loginedHeader setUser:user];
+            [self.loginHeader setUser:user];
+            [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
         }else if (!lastLoginStatus && user.isLogin) {
             //过去是退出状态，现在是登录，说明就是登录操作
             self.tableView.tableHeaderView = nil;
-            self.tableView.tableHeaderView = self.loginedHeader;
+            self.tableView.tableHeaderView = self.loginHeader;
+            [self.loginHeader setUser:user];
         }else if (lastLoginStatus && !user.isLogin) {
             //过去是登录，现在是退出，说明就是退出操作
             self.tableView.tableHeaderView = nil;
@@ -130,10 +137,6 @@ static CGFloat leftViewWidth = 100;
     self.tableView.tableHeaderView = self.header;
     
     [self refreshHeaderView:nil];
-//    [self.header addSubview:self.avatar];
-//    [self.header addSubview:self.nickName];
-//    [self.header addSubview:self.level];
-//    [self.header addSubview:self.speedTip];
     [self.view addSubview:self.adImageView];
     [self.adImageView addSubview:self.adTipImage];
     
@@ -196,7 +199,7 @@ static CGFloat leftViewWidth = 100;
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 1 && indexPath.row == 0) {
+    if (indexPath.section == 1 && indexPath.row == 0) {//我的钱包
         
         MineWalletController *mineWallet = [[MineWalletController alloc] init];
         mineWallet.jz_wantsNavigationBarVisible = YES;
@@ -213,7 +216,7 @@ static CGFloat leftViewWidth = 100;
         }];
     }
     
-    if (indexPath.section == 1 && indexPath.row == 1) {
+    else if (indexPath.section == 1 && indexPath.row == 1) {//我的卡券
         
         MineCardsController *cardController = [[MineCardsController alloc] init];
         cardController.jz_wantsNavigationBarVisible = YES;
@@ -230,7 +233,13 @@ static CGFloat leftViewWidth = 100;
         }];
     }
     
-    if (indexPath.section == 1 && indexPath.row == 4) {
+    else if (indexPath.section == 1 && indexPath.row == 3) {//邀请好友
+   
+        ZTInviteController *invite = [[ZTInviteController alloc] init];
+        [self.navigationController pushViewController:invite animated:YES];
+    }
+    
+    else if (indexPath.section == 1 && indexPath.row == 4) {//我的周边
         
         ZTAroundController *aroundController = [[ZTAroundController alloc] init];
         aroundController.jz_wantsNavigationBarVisible = YES;
@@ -252,10 +261,14 @@ static CGFloat leftViewWidth = 100;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    
     if (indexPath.section == 0) {
-        
+        ZTUser *user = [ZTUser shareUser];
         LeftAchievementCell *cell = [tableView dequeueReusableCellWithIdentifier:LeftAchievementCellId];
         
+        cell.finaceValue = user.his_revenue;
+        cell.currentMoney = user.rest_revenue;
+        cell.contributionValue = user.user_team;
         return cell;
     }else {
         
@@ -335,19 +348,18 @@ static CGFloat leftViewWidth = 100;
     return _tableView;
 }
 
-- (LoginedHeader *)loginedHeader {
-    if (!_loginedHeader) {
-        _loginedHeader = [LoginedHeader headerView];
-        _loginedHeader.frame = CGRectMake(0, 0, leftViewWidth, ZTStatusBarH+140);
+- (LoginHeader *)loginHeader {
+    if (!_loginHeader) {
+        _loginHeader = [LoginHeader headerView];
+        _loginHeader.frame = CGRectMake(0, 0, leftViewWidth, ZTStatusBarH+140);
         ZTWeakSelf
-        
-        _loginedHeader.changeUserInfoBlock = ^{
+        _loginHeader.changeUserInfoBlock = ^{
             
             ZTUserInfoController *userInfo = [[ZTUserInfoController alloc] init];
-            [weakSelf presentViewController:userInfo animated:YES completion:nil];
+            [weakSelf.navigationController pushViewController:userInfo animated:YES];
         };
     }
-    return _loginedHeader;
+    return _loginHeader;
 }
 
 - (UnloginHeader *)unloginHeader {
@@ -373,53 +385,6 @@ static CGFloat leftViewWidth = 100;
         
     }
     return _header;
-}
-
-- (UIImageView *)avatar {
-    
-    if (!_avatar) {
-        _avatar = [[UIImageView alloc] initWithFrame:CGRectMake(20, 30, 60, 60)];
-        _avatar.userInteractionEnabled = YES;
-        _avatar.image = imageNamed(@"avatar");
-    }
-    return _avatar;
-}
-
-- (UILabel *)nickName {
-    
-    if (!_nickName) {
-        _nickName = [[UILabel alloc] initWithFrame:CGRectMake(90, 40, 150, 20)];
-        _nickName.textColor = TitleColor;
-        _nickName.font = NavTitleFont;
-        _nickName.text = @"188****0767";
-    }
-    return _nickName;
-}
-
-- (ZTEdgeLabel *)level {
-    
-    if (!_level) {
-        _level = [[ZTEdgeLabel alloc] initWithFrame:CGRectMake(90, 70, 40, 14)];
-        _level.backgroundColor = ZTRGB(255, 66, 45);
-        _level.textAlignment = NSTextAlignmentCenter;
-        _level.textColor = WhiteColor;
-        _level.font = SubTitleFont;;
-        _level.text = @"LV.1";
-        _level.layer.masksToBounds = YES;
-        _level.layer.cornerRadius = 8;
-    }
-    return _level;
-}
-
-- (UILabel *)speedTip {
-    
-    if (!_speedTip) {
-        _speedTip = [[UILabel alloc] initWithFrame:CGRectMake(140, 70, 100, 14)];
-        _speedTip.text = @"1.0倍加速中";
-        _speedTip.textColor = ZTRGB(253, 122, 4);;
-        _speedTip.font = SubTitleFont;
-    }
-    return _speedTip;
 }
 
 - (UIImageView *)adImageView {

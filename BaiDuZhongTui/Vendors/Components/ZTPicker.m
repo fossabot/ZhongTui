@@ -11,7 +11,7 @@
 
 #define MainBackColor [UIColor colorWithRed:240/255.0 green:239/255.0 blue:245/255.0 alpha:1]
 
-#define BackViewH 300
+#define BackViewH 200
 #define TopH 50
 #define PickerViewCornerRadius 10
 
@@ -115,8 +115,13 @@
 /** 选择初始的标题的那个字符*/
 - (void)chooseInitTitle:(NSString *)title {
     
-    NSInteger index = [self.datas indexOfObject:title];
-    
+    NSInteger index;
+    if ([self.datas containsObject:title]) {
+        
+         index = [self.datas indexOfObject:title];
+    }else {
+        index = 0;
+    }
     [self.pickerView selectRow:index inComponent:0 animated:YES];
 }
 
@@ -132,30 +137,42 @@
 - (void)showInView:(UIView *)view
 {
     ZTLogFunc
+//    for (UIView *subs in view.subviews) {
+//        if ([subs isKindOfClass:[ZTPicker class]]) {
+//            ZTPicker *pic = (ZTPicker *)subs;
+//            [pic quit];
+//        }
+//    }
     [view addSubview:self];
     // 浮现
     [UIView animateWithDuration:0.5 animations:^{
 //        CGPoint point = self.backView.center;
 //        point.y -= BackViewH;
 //        self.backView.center = point;
-        self.backView.transform = CGAffineTransformMakeTranslation(0, -BackViewH);
+        CGRect frame = self.backView.frame;
+        frame.origin.y = kSCREENHEIGHT - BackViewH;
+        self.backView.frame = frame;
+//        self.backView.transform = CGAffineTransformMakeTranslation(0, -BackViewH);
     } completion:^(BOOL finished) {
         
     }];
     
 }
 
--(void)quit
+- (void)quit
 {
-    
     if (_isFeedbackResultWhenConfirm && [self.delegate respondsToSelector:@selector(picker:didSelectAtRow:title:)]) {
         [self.delegate picker:self didSelectAtRow:_selectedRow title:self.datas[_selectedRow]];
     }
+    
     [UIView animateWithDuration:0.5 animations:^{
         self.alpha = 0;
-        CGPoint point = self.backView.center;
-        point.y += BackViewH;
-        self.backView.center = point;
+//        CGPoint point = self.backView.center;
+//        point.y += BackViewH;
+//        self.backView.center = point;
+        CGRect backFrame = self.backView.frame;
+        backFrame.origin.y += BackViewH;
+        self.backView.frame = backFrame;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];

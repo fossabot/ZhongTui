@@ -10,6 +10,7 @@
 
 @implementation UnloginHeader
 
+
 + (instancetype)headerView{
     
     UnloginHeader *headView = [[[NSBundle mainBundle] loadNibNamed:@"UnloginHeader" owner:nil options:nil] firstObject];

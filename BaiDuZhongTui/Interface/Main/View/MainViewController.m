@@ -2,7 +2,7 @@
 //  MainViewController.m
 //  BaiDuZhongTui
 //
-//  Created by 杨春禹 on 2017/11/2.
+//  Created by VINCENT on 2017/11/2.
 //  Copyright © 2017年 YiWangTech. All rights reserved.
 //
 
@@ -12,12 +12,12 @@
 
 #import "LeftViewController.h"
 #import "ZTLogInController.h"
+#import "AdvertisementController.h"
+#import "ArticleViewController.h"
+#import "ZTTenVocationController.h"
 
 #import "ZTTableView.h"
 #import "PlaceHolderView.h"
-#import "AdvertisementController.h"
-#import "ArticleViewController.h"
-//#import "MainTableViewCell.h"
 #import "MainButtonCell.h"
 #import "MainSearchCell.h"
 #import "MainScrollCell.h"
@@ -27,6 +27,8 @@
 
 #import <MJRefresh/MJRefresh.h>
 #import "ZTTestViewController.h"
+#import "ZTUserInfoController.h"
+
 
 @interface MainViewController ()
 
@@ -52,6 +54,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self addObserver];
     
     [self configSubView];
     [self loadNewData];
@@ -79,6 +83,21 @@
     [self.mm_drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeNone];
 }
 
+/** 添加抽屉侧滑手势响应的通知*/
+- (void)addObserver {
+    
+    [kNotificationCenter addObserver:self selector:@selector(changeDrawer) name:ZTLoginStatusDidChangedNotification object:nil];
+}
+
+- (void)changeDrawer {
+    ZTUser *user = [ZTUser shareUser];
+    if (user.isLogin) {
+        
+        [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    }else {
+        [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+    }
+}
 
 - (void)loadNewData {
     
@@ -88,12 +107,11 @@
     ZTWeakSelf
     [self.viewModel fetchNewDataCompletion:^(BOOL success) {
         
+        [self.tableView.mj_header endRefreshing];
         if (success) {
             [weakSelf.tableView reloadData];
         }
     }];
-    
-//    self.dataSource = [AdModel mj_objectArrayWithFilename:@"ad.plist"];
 }
 
 
@@ -110,6 +128,7 @@
             if (noMoreData) {
                 [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
             }else{
+                [weakSelf.tableView.mj_footer endRefreshing];
                 [weakSelf.tableView reloadData];
             }
         }
@@ -145,7 +164,7 @@
     
     ZTUser *user = [ZTUser shareUser];
     if (user.isLogin) {
-        
+    
         [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
     }else {
         [self presentViewController:[[ZTLogInController alloc] init] animated:YES completion:nil];
@@ -155,8 +174,10 @@
 
 - (void)showMessage {
     
-    ZTTestViewController *test = [[ZTTestViewController alloc] init];
-    [self.navigationController pushViewController:test animated:YES];
+    ZTUserInfoController * userInfo = [[ZTUserInfoController alloc] init];
+//    ZTTestViewController *test = [[ZTTestViewController alloc] init];
+    [self.navigationController pushViewController:userInfo animated:YES];
+    
 //    [self presentViewController:test animated:YES completion:nil];
     //暂未开通
 }
@@ -172,7 +193,16 @@
         ZTWeakSelf
         _viewModel.cellSelectBlock = ^(id data, NSIndexPath *indexPath) {
           
-            
+            ArticleViewController *article = [[ArticleViewController alloc] init];
+            article.adid = data;
+            [weakSelf.navigationController pushViewController:article animated:YES];
+        };
+        
+        _viewModel.tenVocationBlock = ^(UIButton *button) {
+          
+            ZTTenVocationController *ten = [[ZTTenVocationController alloc] init];
+            ten.vocation = button.titleLabel.text;
+            [weakSelf.navigationController pushViewController:ten animated:YES];
         };
     }
     return _viewModel;
@@ -206,7 +236,7 @@
         }];
         
         FOREmptyAssistantConfiger *config = [[FOREmptyAssistantConfiger alloc] init];
-        config.emptyImage = imageNamed(@"");
+        config.emptyImage = imageNamed(emptyImageName);
         config.emptyTitle = @"网络出错，暂无数据";
         config.emptyTitleColor = UnenableTitleColor;
         config.emptyTitleFont = SubTitleFont;

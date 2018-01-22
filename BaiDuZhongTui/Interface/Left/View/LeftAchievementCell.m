@@ -2,7 +2,7 @@
 //  LeftAchievementCell.m
 //  BaiDuZhongTui
 //
-//  Created by 杨春禹 on 2017/11/3.
+//  Created by VINCENT on 2017/11/3.
 //  Copyright © 2017年 YiWangTech. All rights reserved.
 //
 
@@ -152,15 +152,29 @@
 
 
 - (void)setFinaceValue:(NSString *)finaceValue {
-    
+    if (!finaceValue) {
+        finaceValue = @"0.00";
+    }
     _finaceValue = finaceValue;
     [self.finaceValueBtn setTitle:finaceValue forState:UIControlStateNormal];
 }
 
+- (void)setCurrentMoney:(NSString *)currentMoney {
+    if (!currentMoney) {
+        currentMoney = @"0.00";
+    }
+    _currentMoney = currentMoney;
+    [self.currentMoneyValueBtn setTitle:currentMoney forState:UIControlStateNormal];
+}
+
 - (void)setContributionValue:(NSString *)contributionValue {
-    
+    if (!contributionValue) {
+        contributionValue = @"0.00";
+    }
     _contributionValue = contributionValue;
     [self.contributionValueBtn setTitle:contributionValue forState:UIControlStateNormal];
 }
+
+
 
 @end

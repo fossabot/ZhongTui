@@ -97,6 +97,7 @@
     [PPNetworkHelper POST:BaseUrl parameters:para success:^(id responseObject) {
        
         if (responseObject && [responseObject[STATE] isEqualToString:@"0"]) {
+            [ZTUser configUserInfoWithDic:responseObject[USERINFO]];
             [MBProgressHUD showSuccessMessage:@"登录成功"];
             success(YES);
         }else if([responseObject[STATE] isEqualToString:@"1"]){
@@ -175,6 +176,7 @@
             [PPNetworkHelper POST:BaseUrl parameters:para success:^(id responseObject) {
                 
                 if ([responseObject[STATE] isEqualToString:@"0"]) {
+                    [ZTUser configUserInfoWithDic:responseObject[USERINFO]];
                     [MBProgressHUD showSuccessMessage:@"注册成功"];
                     success(YES);
                 }else {

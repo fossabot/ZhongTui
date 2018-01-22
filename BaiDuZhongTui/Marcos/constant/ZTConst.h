@@ -134,4 +134,8 @@ UIKIT_EXTERN NSString * const ZTReceivedRemoteNotification;
 /** 用户单例类信息发生改变的通知*/
 UIKIT_EXTERN NSString * const ZTUserInfoDidChangedNotification;
 
+/** 用户的登录状态发生改变的时候*/
+UIKIT_EXTERN NSString * const ZTLoginStatusDidChangedNotification;
+
+
 

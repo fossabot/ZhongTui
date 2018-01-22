@@ -2,12 +2,12 @@
 //  ZTUserInfoController.h
 //  BaiDuZhongTui
 //
-//  Created by VINCENT on 2017/12/17.
-//  Copyright © 2017年 YiWangTech. All rights reserved.
+//  Created by VINCENT on 2018/1/3.
+//  Copyright © 2018年 YiWangTech. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "THBaseScrollViewController.h"
 
-@interface ZTUserInfoController : UIViewController
+@interface ZTUserInfoController : THBaseScrollViewController
 
 @end

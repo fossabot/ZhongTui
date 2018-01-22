@@ -24,8 +24,8 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     CGFloat baseViewHeight = 0;
     CGFloat baseViewWidth = 0;
@@ -46,9 +46,9 @@
         
     }
     
-    CGFloat contentWidth = baseViewWidth > kSCREENWIDTH ? baseViewWidth : kSCREENWIDTH;
+    CGFloat contentWidth = baseViewWidth > kSCREENWIDTH ? baseViewWidth : 0;
   
-    CGFloat contentHeight = baseViewHeight >= kSCREENHEIGHT ? baseViewHeight+20 : kSCREENHEIGHT;
+    CGFloat contentHeight = baseViewHeight >= kSCREENHEIGHT ? baseViewHeight+20 : kSCREENHEIGHT+20;
     
     self.baseScrollView.contentSize = CGSizeMake(contentWidth, contentHeight);
     
@@ -59,7 +59,14 @@
 
 - (UIScrollView *)baseScrollView{
     if (!_baseScrollView) {
-        _baseScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+        CGRect rect;
+        if (self.navigationController) {
+            rect = CGRectMake(0, 0, kSCREENWIDTH, kSCREENHEIGHT-ZTTopNaviHeight);
+        }else {
+            rect = self.view.bounds;
+        }
+        _baseScrollView = [[UIScrollView alloc] initWithFrame:rect];
+        
     }
     return _baseScrollView;
 }

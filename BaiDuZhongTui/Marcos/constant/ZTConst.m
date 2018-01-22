@@ -118,5 +118,8 @@ NSString * const ZTReceivedRemoteNotification = @"ZTReceivedRemoteNotification";
 /** 用户单例类信息发生改变的通知  userInfo：{ LASTLOGINSTATUS: @"0"代表之前是退出状态  @"1"代表之前是登录状态}*/
 NSString * const ZTUserInfoDidChangedNotification = @"ZTUserInfoDidChangedNotification";
 
+/** 用户的登录状态发生改变的时候*/
+NSString * const ZTLoginStatusDidChangedNotification = @"ZTLoginStatusDidChangedNotification";
+
 
 

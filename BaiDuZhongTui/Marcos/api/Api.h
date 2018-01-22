@@ -11,6 +11,9 @@
 
 #define BaseUrl  @"http://zt.ywvx.com/application/index.php"
 
+/** 头像上传url*/
+#define avatorUrl @"http://zt.ywvx.com/application/user/updateUserAvatar.php"
+
 #pragma mark  request parameters key  ----------------
 
 #define PARAC @"c"

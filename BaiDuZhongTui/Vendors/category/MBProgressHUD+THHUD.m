@@ -14,9 +14,7 @@
 
 + (void)initialize {
     
-    
-        
-        [MBProgressHUD appearance].contentColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+//        [MBProgressHUD appearance].contentColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
     
 }
 

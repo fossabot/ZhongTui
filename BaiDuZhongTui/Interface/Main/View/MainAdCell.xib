@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="347" height="190.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchBar" translatesAutoresizingMaskIntoConstraints="NO" id="uO7-pJ-JkC">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="001" translatesAutoresizingMaskIntoConstraints="NO" id="uO7-pJ-JkC">
                         <rect key="frame" x="10" y="10" width="327" height="120"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="120" id="beT-Et-7Yk"/>
@@ -106,7 +106,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="001" width="500" height="200"/>
         <image name="adTipImage" width="46" height="28"/>
-        <image name="searchBar" width="32" height="32"/>
     </resources>
 </document>

@@ -2,216 +2,343 @@
 //  ZTUserInfoController.m
 //  BaiDuZhongTui
 //
-//  Created by VINCENT on 2017/12/17.
-//  Copyright © 2017年 YiWangTech. All rights reserved.
+//  Created by VINCENT on 2018/1/3.
+//  Copyright © 2018年 YiWangTech. All rights reserved.
 //
 
 #import "ZTUserInfoController.h"
-#import "ZTTableView.h"
-#import "ZTUserTableViewCell.h"
-#import "ZTUserNameTableViewCell.h"
-
-#import "ZTUser.h"
-#import "ZTUserManager.h"
-#import "NSString+Predicate.h"
+#import "ZTUserInfoView.h"
+#import "ZTUserInfoPickerCell.h"
 #import "ZTPicker.h"
+#import "ZTImagePickerHelper.h"
 
-@interface ZTUserInfoController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,ZTPickerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIButton *icon;
-@property (weak, nonatomic) IBOutlet ZTTableView *userTableview;
-@property (nonatomic, strong) UIBarButtonItem *rightItem;
+static ZTPicker *_picker;
 
-/** rawDataSource*/
-@property (nonatomic, strong) NSMutableArray *rawDataSource; //原始的个人信息数据
-/** editedDataSource*/
-@property (nonatomic, strong) NSMutableArray *editedDataSource; //修改之后的个人信息数据
-/** userinfoDatas*/
-@property (nonatomic, strong) NSMutableArray *userinfoDatas;
+@interface ZTUserInfoController ()<ZTPickerDelegate>
 
+/** icon*/
+@property (nonatomic, strong) UIButton *icon;
+@property (nonatomic, strong) UIButton *edit;
+
+/** name*/
+@property (nonatomic, strong) ZTUserInfoView *nameCell;
+
+/** picker*/
+@property (nonatomic, strong) ZTUserInfoPickerCell *genderView;
+@property (nonatomic, strong) ZTUserInfoPickerCell *ageView;
+@property (nonatomic, strong) ZTUserInfoPickerCell *vocationView;
+@property (nonatomic, strong) ZTUserInfoPickerCell *cityView;
+
+/** datasource*/
+@property (nonatomic, strong) NSMutableArray *dataSource;
 
 @end
 
 @implementation ZTUserInfoController
 {
-    BOOL _isChanging;
-    BOOL _isChanged;
-    NSIndexPath *_selectIndexPath;
+    NSString *_firstTitle;
+    ZTUserInfoPickerCell *_selectedPicker;
+    BOOL _isEditing;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self config];
+    _isEditing = NO;
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    [self configSubView];
+    [self masonrySubView];
+    [self setUser];
+    [self setUserinteractionEnable];
 }
 
-- (void)config {
+- (void)setUser {
     
-    _isChanging = NO;
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:@""] forState:UIControlStateNormal];
-    
-    [self.userTableview registerClass:[ZTUserTableViewCell class] forCellReuseIdentifier:ZTUserTableViewCellId];
-    [self.userTableview registerClass:[ZTUserTableViewCell class] forCellReuseIdentifier:ZTUserTableViewCellId];
-    
-    self.navigationItem.title = @"个人信息";
-    
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(editUserInfo:)];
-    self.rightItem = rightItem;
-    
-}
-
-/** 编辑个人信息*/
-- (void)editUserInfo:(UIBarButtonItem *)item {
-    
-    _isChanged = [ZTUser checkUserInfoChanged:@[] rawUserProperty:@[]];
-    if (_isChanging) {
-        //当前状态是正在改变个人数据，点击则是为了完成修改
-        [self.view endEditing:YES];
-    }
-    _isChanging = !_isChanging;
-    item.title = _isChanging ? @"编辑" : @"完成";
+    ZTUser *user = [ZTUser shareUser];
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:user.avatar] forState:UIControlStateNormal placeholderImage:imageNamed(placeHolderAvatar)];
+    self.nameCell.nameText.text = user.user_name;
+    [self.genderView.userinfoPickerBtn setTitle:user.gender forState:UIControlStateNormal];
+    [self.ageView.userinfoPickerBtn setTitle:user.age forState:UIControlStateNormal];
+    [self.vocationView.userinfoPickerBtn setTitle:user.vocation forState:UIControlStateNormal];
+    [self.cityView.userinfoPickerBtn setTitle:user.address forState:UIControlStateNormal];
     
 }
 
-- (IBAction)iconClick:(UIButton *)sender {
+- (void)configSubView {
     
-    if (_isChanging) {
-        ZTLog(@"可以编辑个人信息");
-    }else {
-        ZTLog(@"不可以编辑个人信息");
-    }
+    self.baseScrollView.backgroundColor = GrayBackGroundColor;
+    UIBarButtonItem *edit = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStyleDone target:self action:@selector(edit:)];
+    self.navigationItem.rightBarButtonItem = edit;
+    
+    
+    UIButton *icon = [UIButton buttonWithType:UIButtonTypeCustom];
+    icon.layer.cornerRadius = 30;
+    icon.layer.masksToBounds = YES;
+    [icon setImage:imageNamed(placeHolderAvatar) forState:UIControlStateNormal];
+    icon.titleLabel.font = SubTitleFont;
+    [icon addTarget:self action:@selector(iconClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.baseScrollView addSubview:icon];
+    self.icon = icon;
+    
+    UIButton *editIcon = [UIButton buttonWithType:UIButtonTypeCustom];
+    [editIcon setTitle:@"修改头像" forState:UIControlStateNormal];
+    editIcon.titleLabel.font = SubTitleFont;
+    [editIcon setTitleColor:UnenableTitleColor forState:UIControlStateNormal];
+    [editIcon addTarget:self action:@selector(iconClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.baseScrollView addSubview:editIcon];
+    self.edit = editIcon;
+    
+    ZTWeakSelf
+    ZTUserInfoView *nameCell = [ZTUserInfoView userinfoView];
+    nameCell.leftLabel.text = @"姓名";
+    [self.baseScrollView addSubview:nameCell];
+    nameCell.nameViewBlock = ^(NSString *name) {
+        
+    };
+    self.nameCell = nameCell;
+    
+    ZTUserInfoPickerCell *genderCell = [ZTUserInfoPickerCell userinfoView];
+    genderCell.leftLabel.text = @"性别";
+    [self.baseScrollView addSubview:genderCell];
+    genderCell.buttonTouchedBlock = ^{
+        
+        [weakSelf genderClick];
+    };
+    self.genderView = genderCell;
+    
+    ZTUserInfoPickerCell *ageCell = [ZTUserInfoPickerCell userinfoView];
+    ageCell.leftLabel.text = @"年龄";
+    [self.baseScrollView addSubview:ageCell];
+    ageCell.buttonTouchedBlock = ^{
+        
+        [weakSelf ageClick];
+    };
+    self.ageView = ageCell;
+    
+    ZTUserInfoPickerCell *vocationCell = [ZTUserInfoPickerCell userinfoView];
+    vocationCell.leftLabel.text = @"行业";
+    [self.baseScrollView addSubview:vocationCell];
+    vocationCell.buttonTouchedBlock = ^{
+        
+        [weakSelf vocationClick];
+    };
+    self.vocationView = vocationCell;
+    
+    ZTUserInfoPickerCell *cityCell = [ZTUserInfoPickerCell userinfoView];
+    cityCell.leftLabel.text = @"城市";
+    [self.baseScrollView addSubview:cityCell];
+    cityCell.buttonTouchedBlock = ^{
+        
+        [weakSelf cityClick];
+    };
+    self.cityView = cityCell;
+    
 }
 
-#pragma -- mark TableViewDelegate  -----------------
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+- (void)masonrySubView {
+    
+    [self.icon makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.equalTo(60);
+        make.width.height.equalTo(afterScale(80));
+        make.centerX.equalTo(self.baseScrollView);
+    }];
+    
+    [self.edit makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.top.equalTo(self.icon.bottom).offset(5);
+        make.centerX.equalTo(self.icon);
+    }];
+    
+    [self.nameCell makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.equalTo(self.edit.bottom).offset(30);
+        make.width.equalTo(self.baseScrollView);
+        make.centerX.equalTo(self.baseScrollView);
+        make.height.equalTo(60);
+    }];
+    
+    [self.genderView makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.equalTo(self.nameCell.bottom);
+        make.width.equalTo(self.baseScrollView);
+        make.centerX.equalTo(self.baseScrollView);
+        make.height.equalTo(60);
+    }];
+    
+    [self.ageView makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.equalTo(self.genderView.bottom);
+        make.width.equalTo(self.baseScrollView);
+        make.centerX.equalTo(self.baseScrollView);
+        make.height.equalTo(60);
+    }];
+    
+    [self.vocationView makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.equalTo(self.ageView.bottom).offset(30);
+        make.width.equalTo(self.baseScrollView);
+        make.centerX.equalTo(self.baseScrollView);
+        make.height.equalTo(60);
+    }];
+    
+    [self.cityView makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.equalTo(self.vocationView.bottom);
+        make.width.equalTo(self.baseScrollView);
+        make.centerX.equalTo(self.baseScrollView);
+        make.height.equalTo(60);
+    }];
+    
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+
+#pragma mark -- inner Methods 自定义方法  -------------------------------
+
+- (void)edit:(UIBarButtonItem *)item {
     
-    if (section == 0) {
-        return 3;
-    }
-    return 2;
+    _isEditing = !_isEditing;
+    item.title = _isEditing ? @"取消" : @"编辑";
+    
+//    [self.baseScrollView.subviews makeObjectsPerformSelector:@selector(setUserInteractionEnabled:) withObject:@(_isEditing)];
+    [self setUserinteractionEnable];
+    
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)setUserinteractionEnable {
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (!_isChanging) {
+    self.icon.userInteractionEnabled = _isEditing;
+    self.edit.userInteractionEnabled = _isEditing;
+    self.nameCell.userInteractionEnabled = _isEditing;
+    self.genderView.userInteractionEnabled = _isEditing;
+    self.ageView.userInteractionEnabled = _isEditing;
+    self.vocationView.userInteractionEnabled = _isEditing;
+}
+
+
+/** 点击切换头像*/
+- (void)iconClick:(UIButton *)icon {
+    
+    if (!_isEditing) {
         return;
     }
-
-    _selectIndexPath = indexPath;
-    if (indexPath.section == indexPath.row == 0) {
-        ZTUserNameTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        [cell.nameText becomeFirstResponder];
-    }else {
+    ZTWeakSelf
+    ZTUser *user = [ZTUser shareUser];
+    [ZTImagePickerHelper showImagePicker:^(UIImage *sourceImage) {
+       
+        [MBProgressHUD showIndicatorConstantInWindow];
         
-        ZTPicker *picker = [ZTPicker pickerView];
-        picker.datas = self.userinfoDatas[indexPath.section][indexPath.row];
-        picker.title = [self leftTitle][indexPath.section][indexPath.row];
-        picker.delegate = self;
-        [picker show];
+        NSDictionary *para = [NSDictionary dictionaryWithObjectsAndKeys:user.userid,USERID, nil];
+        [PPNetworkHelper uploadImagesWithURL:avatorUrl parameters:para name:@"file" images:@[sourceImage] fileNames:nil imageScale:0.5 imageType:@"png" progress:^(NSProgress *progress) {
+            
+            
+        } success:^(id responseObject) {
+            ZTLog(@"上传头像成功");
+            [user setAvatar:responseObject[@"avatar"]];
+            [MBProgressHUD hideHUD];
+            [weakSelf.icon setImage:sourceImage forState:UIControlStateNormal];
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideHUD];
+            ZTLog(@"上传头像失败");
+        }];
+    }];
+}
+
+
+- (void)genderClick {
+    
+    if (!_isEditing) {
+        return;
     }
-    
+    ZTUser *user = [ZTUser shareUser];
+    _firstTitle = user.gender;
+    _selectedPicker = self.genderView;
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Gender" ofType:@"plist"];
+    self.dataSource = [NSMutableArray arrayWithContentsOfFile:path];
+    ZTPicker *picker = [self picker];
+    picker.datas = self.dataSource;
+    picker.title = @"性别";
+    [picker show];
 }
 
-#pragma -- mark TableViewDataSource  --------------
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)ageClick {
     
-    
-    if (indexPath.section == 0 && indexPath.row == 0) {
-        
-        ZTUserNameTableViewCell *nameCell = [tableView dequeueReusableCellWithIdentifier:ZTUserNameTableViewCellId];
-        nameCell.leftLabel.text = [self leftTitle][indexPath.section][indexPath.row];
-        nameCell.nameText.text = self.rawDataSource[indexPath.section][indexPath.row];
-        nameCell.nameText.delegate = self;
-        return nameCell;
-        
-    }else {
-        
-        ZTUserTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:ZTUserTableViewCellId];
-        cell.leftLabel.text = [self leftTitle][indexPath.section][indexPath.row];
-        cell.contentLabel.text = self.rawDataSource[indexPath.section][indexPath.row];
-        return cell;
+    if (!_isEditing) {
+        return;
     }
-
+    ZTUser *user = [ZTUser shareUser];
+    _firstTitle = user.age;
+    _selectedPicker = self.ageView;
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Age" ofType:@"plist"];
+    self.dataSource = [NSMutableArray arrayWithContentsOfFile:path];
+    ZTPicker *picker = [self picker];
+    picker.datas = self.dataSource;
+    picker.title = @"年龄";
+    [picker show];
 }
 
-
-- (NSArray *)leftTitle {
-    return @[@[@"昵称",@"性别",@"年龄"],@[@"行业",@"城市"]];
-}
-
-
-#pragma mark pickerdelegate
-
-/** 为每行数据提供数据源*/
-- (nullable NSString *)picker:(ZTPicker *_Nullable)picker titleForRow:(NSInteger)row {
-    NSArray *arr = self.userinfoDatas[_selectIndexPath.section][_selectIndexPath.row];
+- (void)vocationClick {
     
-    return arr[row];
-}
-
-- (nullable NSString *)firstTitleForPicker:(ZTPicker *_Nullable)picker {
-    return self.rawDataSource[_selectIndexPath.section][_selectIndexPath.row];
-}
-
-/** 选中了那个选项*/
-- (void)picker:(ZTPicker *_Nullable)picker didSelectAtRow:(NSInteger)row title:(NSString * _Nullable)title {
-    
-    ZTLog(@"选中%@",title);
-}
-
-
-#pragma mark  textfielddelegate  -------------
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
-    BOOL isBlank = [NSString isBlankString:textField.text];
-    
-    ZTUserNameTableViewCell *cell = [self.userTableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    cell.tipLabel.text = isBlank ? @"昵称不能为空" : @"";
-    return YES;
-}
-
-#pragma mark -- lazyMethods 懒加载区域  --------------------------
-
-- (NSMutableArray *)rawDataSource{
-    if (!_rawDataSource) {
-        ZTUser *user = [ZTUser shareUser];
-        _rawDataSource = [NSMutableArray arrayWithObjects:@[user.user_name,user.gender,user.age],@[user.vocation,user.address], nil];
+    if (!_isEditing) {
+        return;
     }
-    return _rawDataSource;
+    ZTUser *user = [ZTUser shareUser];
+    _firstTitle = user.vocation;
+    _selectedPicker = self.vocationView;
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Trades" ofType:@"plist"];
+    self.dataSource = [NSMutableArray arrayWithContentsOfFile:path];
+    ZTPicker *picker = [self picker];
+    picker.datas = self.dataSource;
+    picker.title = @"行业";
+    [picker show];
 }
 
-- (NSMutableArray *)editedDataSource{
-    if (!_editedDataSource) {
-        _editedDataSource = [NSMutableArray arrayWithArray:self.rawDataSource];
-    }
-    return _editedDataSource;
-}
-
-- (NSMutableArray *)userinfoDatas {
+- (void)cityClick {
     
-    if (!_userinfoDatas) {
-        
-        NSString * genderPath = [[NSBundle mainBundle] pathForResource:@"Gender" ofType:@"plist"];
-        NSArray *gender = [[NSArray alloc] initWithContentsOfFile:genderPath];
-        NSString * agePath = [[NSBundle mainBundle] pathForResource:@"Age" ofType:@"plist"];
-        NSArray *age = [[NSArray alloc] initWithContentsOfFile:agePath];
-        NSString * tradesPath = [[NSBundle mainBundle] pathForResource:@"Trades" ofType:@"plist"];
-        NSArray *trades = [[NSArray alloc] initWithContentsOfFile:tradesPath];
-        NSString * addressPath = [[NSBundle mainBundle] pathForResource:@"Address" ofType:@"plist"];
-        NSArray *address = [[NSArray alloc] initWithContentsOfFile:addressPath];
-        _userinfoDatas = [NSMutableArray arrayWithObjects:@[@"",gender,age],@[trades,address], nil];
+    if (!_isEditing) {
+        return;
     }
-    
-    return _userinfoDatas;
+    ZTUser *user = [ZTUser shareUser];
+    _firstTitle = user.address;
+    _selectedPicker = self.cityView;
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Address" ofType:@"plist"];
+    self.dataSource = [NSMutableArray arrayWithContentsOfFile:path];
+    ZTPicker *picker = [self picker];
+    picker.datas = self.dataSource;
+    picker.title = @"城市";
+    [picker show];
 }
 
+
+
+- (ZTPicker *)picker {
+    
+    if (!_picker) {
+        _picker = [ZTPicker pickerView];
+        _picker.delegate = self;
+    }
+    return _picker;
+}
+
+#pragma mark  ---  pickerDelegate
+
+- (NSString *)picker:(ZTPicker *)picker titleForRow:(NSInteger)row {
+    
+    return self.dataSource[row];
+}
+
+- (void)picker:(ZTPicker *)picker didSelectAtRow:(NSInteger)row title:(NSString *)title {
+    
+    [_selectedPicker selecTitle:title];
+    ZTLog(@"选中了 %ld 行 title: %@",row,title);
+}
+
+- (NSString *)firstTitleForPicker:(ZTPicker *)picker {
+    
+    return _firstTitle;
+}
 
 @end

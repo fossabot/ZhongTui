@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="LoginHeader">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="104"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtm-Z6-d2h">
+                    <rect key="frame" x="30" y="14" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="dtm-Z6-d2h" secondAttribute="height" multiplier="1:1" id="bdE-ss-0Jo"/>
+                        <constraint firstAttribute="width" constant="80" id="gDJ-OC-da8"/>
+                    </constraints>
+                    <state key="normal" title="icon" image="zt_mine_unloginicon_83x83_"/>
+                    <connections>
+                        <action selector="iconClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="F6a-hf-eSq"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18855970767" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOD-0K-sKL">
+                    <rect key="frame" x="130" y="14" width="140.5" height="26.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LV.1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8oL-l8-l8s">
+                    <rect key="frame" x="130" y="73" width="29.5" height="21"/>
+                    <color key="backgroundColor" red="0.83137254900000002" green="0.23529411759999999" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.1倍加速中" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqy-dy-UCR">
+                    <rect key="frame" x="179.5" y="73" width="88.5" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Hqy-dy-UCR" firstAttribute="leading" secondItem="8oL-l8-l8s" secondAttribute="trailing" constant="20" id="11p-AG-ou6"/>
+                <constraint firstItem="8oL-l8-l8s" firstAttribute="leading" secondItem="dtm-Z6-d2h" secondAttribute="trailing" constant="20" id="DM7-77-mcT"/>
+                <constraint firstItem="IOD-0K-sKL" firstAttribute="leading" secondItem="dtm-Z6-d2h" secondAttribute="trailing" constant="20" id="E3a-ZA-Lh6"/>
+                <constraint firstItem="8oL-l8-l8s" firstAttribute="bottom" secondItem="dtm-Z6-d2h" secondAttribute="bottom" id="KUG-Mm-Mnl"/>
+                <constraint firstAttribute="bottom" secondItem="dtm-Z6-d2h" secondAttribute="bottom" constant="10" id="T6b-oO-OC7"/>
+                <constraint firstItem="IOD-0K-sKL" firstAttribute="top" secondItem="dtm-Z6-d2h" secondAttribute="top" id="ahL-MB-kgD"/>
+                <constraint firstItem="Hqy-dy-UCR" firstAttribute="bottom" secondItem="8oL-l8-l8s" secondAttribute="bottom" id="ugP-ax-cP0"/>
+                <constraint firstItem="dtm-Z6-d2h" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="uwJ-N7-7bl"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="icon" destination="dtm-Z6-d2h" id="qOl-BX-BIR"/>
+                <outlet property="level" destination="8oL-l8-l8s" id="L0o-CU-qI7"/>
+                <outlet property="nickname" destination="IOD-0K-sKL" id="Txx-d7-Kff"/>
+                <outlet property="rate" destination="Hqy-dy-UCR" id="lNf-en-VkT"/>
+            </connections>
+            <point key="canvasLocation" x="56.5" y="-365"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="zt_mine_unloginicon_83x83_" width="83" height="83"/>
+    </resources>
+</document>

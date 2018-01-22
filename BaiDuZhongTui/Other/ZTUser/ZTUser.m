@@ -60,7 +60,7 @@ ZTSingletonM(User)
     ZTWeakSelf
     [[kUserDefaults dictionaryRepresentation] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop)
      {
-         if([key hasPrefix:@"user_"])
+         if([key hasPrefix:@"zt_"])
          {
              [kUserDefaults removeObjectForKey:key];
          }
@@ -75,7 +75,7 @@ ZTSingletonM(User)
 /** 提醒代理 该干活了*/
 + (void)alertNotification {
     
-    [kNotificationCenter postNotificationName:ZTUserInfoDidChangedNotification object:nil userInfo:@{LASTLOGINSTATUS:@"1"}];
+    [kNotificationCenter postNotificationName:ZTUserInfoDidChangedNotification object:nil userInfo:@{LASTLOGINSTATUS:@YES}];
 }
 
 
@@ -273,12 +273,12 @@ ZTSingletonM(User)
 #pragma mark  -----------  本地的个人信息数据  -------------
 
 - (void)setIsLogin:(BOOL)isLogin {
-    [kUserDefaults setBool:isLogin forKey:@"isLogin"];
+    [kUserDefaults setBool:isLogin forKey:LOGINSTATUS];
     [kUserDefaults synchronize];
 }
 
 - (BOOL)isLogin {
-    return [kUserDefaults boolForKey:@"isLogin"];
+    return [kUserDefaults boolForKey:LOGINSTATUS];
 }
 
 

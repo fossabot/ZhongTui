@@ -255,6 +255,7 @@
             [kUserDefaults setBool:YES forKey:LOGINSTATUS];
             [kUserDefaults synchronize];
             [kNotificationCenter postNotificationName:ZTUserInfoDidChangedNotification object:nil userInfo:@{LASTLOGINSTATUS:@NO}];
+            [kNotificationCenter postNotificationName:ZTLoginStatusDidChangedNotification object:nil];
             
             [self exit];
         }
